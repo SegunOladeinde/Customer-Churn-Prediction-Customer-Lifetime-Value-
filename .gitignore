@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# VS Code
+.vscode/
+
+# Data files - Exclude these as they are not needed for the deployed app
+data/raw/
+data/processed/
+
+# Notebooks - Not needed for deployment
+notebooks/
+
+# MyPy cache
+.mypy_cache/

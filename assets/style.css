@@ -1,0 +1,101 @@
+/* style.css */
+
+/* --- General Body & Font --- */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F0F2F6; /* Light gray background */
+}
+
+/* --- Main App Container --- */
+.main .block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+/* --- Custom Headers --- */
+.st-emotion-cache-18ni7ap {
+    background-color: #FFFFFF; /* White background for the header */
+    border-bottom: 1px solid #E6E6E6;
+}
+
+/* --- Sidebar Styling --- */
+.st-emotion-cache-16txtl3 {
+    padding: 2rem 1rem;
+}
+
+/* --- Custom Containers --- */
+div[data-testid="stVerticalBlock"] > [style*="flex-direction: column;"] > [data-testid="stVerticalBlock"] {
+    border: 1px solid #E6E6E6;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* --- Metric Styling --- */
+div[data-testid="stMetric"] {
+    background-color: #F8F9FA;
+    border: 1px solid #E6E6E6;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+div[data-testid="stMetric"] > label {
+    font-weight: 600;
+    color: #495057;
+}
+
+div[data-testid="stMetric"] > div {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+/* --- Button Styling --- */
+.stButton > button {
+    width: 100%;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    background-color: #0068C9;
+    color: white;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+.stButton > button:hover {
+    background-color: #0056A8;
+    color: white;
+}
+
+/* --- Tab Styling --- */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 24px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    height: 50px;
+    white-space: pre-wrap;
+    background-color: transparent;
+    border-radius: 4px 4px 0px 0px;
+    gap: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: #FFFFFF;
+}
+
+/* --- Expander Styling --- */
+.st-emotion-cache-p5msec {
+    border: 1px solid #E6E6E6;
+    border-radius: 0.5rem;
+    background-color: #FAFAFA;
+}
+
+.st-emotion-cache-p5msec summary {
+    font-weight: 600;
+}
