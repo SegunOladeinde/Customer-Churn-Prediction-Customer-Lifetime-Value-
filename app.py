@@ -231,7 +231,6 @@ with st.sidebar:
         <div style="display: flex; align-items: center; gap: 15px;">
             <a href="https://github.com/SegunOladeinde" target="_blank">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="25"/>
-
             </a>
 
             <a href="https://www.linkedin.com/in/segun-oladeinde/" target="_blank">
