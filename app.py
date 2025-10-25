@@ -216,12 +216,15 @@ with st.sidebar:
     # Main title — bold, larger, and clearer
     st.markdown("<h1 style='font-weight: 900;'>🎯 Churn Prediction & CLV Insights</h1>", unsafe_allow_html=True)
     
-    # Developer name
-    st.markdown("###  Developed by Segun Oladeinde")
+    # Developer name - centered
+    st.markdown(
+        "<h3 style='text-align: center;'>Developed by Segun Oladeinde</h3>",
+        unsafe_allow_html=True
+    )
     
     # Centered professional title
     st.markdown(
-        "<p style='text-align: center; font-weight: bold; color: #4A90E2;'>Data Scientist & ML Engineer</p>",
+        "<p style='text-align: center; font-weight: bold; color: #000000;'>Data Scientist & ML Engineer</p>",
         unsafe_allow_html=True
     )
     
@@ -230,10 +233,10 @@ with st.sidebar:
         """
         <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 10px;">
             <a href="https://github.com/SegunOladeinde" target="_blank" style="text-decoration: none;">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="30" style="filter: brightness(0) invert(1);"/>
+                <img src="https://cdn.simpleicons.org/github/000000" width="30" alt="GitHub"/>
             </a>
             <a href="https://www.linkedin.com/in/segun-oladeinde/" target="_blank" style="text-decoration: none;">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="30"/>
+                <img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="30" alt="LinkedIn"/>
             </a>
         </div>
         """,
