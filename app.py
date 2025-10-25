@@ -213,8 +213,11 @@ encoding_mapping, test_data, model_comparison, feature_comp = load_supporting_da
 # --- 5. SIDEBAR ---
 
 with st.sidebar:
-    # Main title — bold, larger, and clearer
-    st.markdown("<h1 style='font-weight: 900;'>🎯 Churn Prediction & CLV Insights</h1>", unsafe_allow_html=True)
+    # Main title — centered, bold, larger, and clearer
+    st.markdown(
+        "<h1 style='text-align: center; font-weight: 900;'>🎯 Churn Prediction & CLV Insights</h1>", 
+        unsafe_allow_html=True
+    )
     
     # Developer name - centered
     st.markdown(
@@ -232,11 +235,11 @@ with st.sidebar:
     st.markdown(
         """
         <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 10px;">
-            <a href="https://github.com/SegunOladeinde" target="_blank" style="text-decoration: none;">
-                <img src="https://cdn.simpleicons.org/github/000000" width="30" alt="GitHub"/>
+            <a href="https://github.com/SegunOladeinde" target="_blank" style="text-decoration: none;" title="GitHub Profile">
+                <img src="https://cdn.simpleicons.org/github/000000" width="32" alt="GitHub" style="display: block;"/>
             </a>
-            <a href="https://www.linkedin.com/in/segun-oladeinde/" target="_blank" style="text-decoration: none;">
-                <img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="30" alt="LinkedIn"/>
+            <a href="https://www.linkedin.com/in/segun-oladeinde/" target="_blank" style="text-decoration: none;" title="LinkedIn Profile">
+                <img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="32" alt="LinkedIn" style="display: block;"/>
             </a>
         </div>
         """,
