@@ -225,28 +225,28 @@ with st.sidebar:
         unsafe_allow_html=True
     )
     
-    st.markdown("---")
-    
-    # Social media links with hover tooltips and spacing
+ # Add social links with icons
     st.markdown(
         """
-        <div style="display: flex; justify-content: center; align-items: center; gap: 20px; padding-top: 10px;">
-            <!-- GitHub icon with hover tooltip -->
-            <a href="https://github.com/SegunOladeinde" target="_blank" title="Visit my GitHub">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="28"/>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <a href="https://github.com/SegunOladeinde" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="25"/>
+
             </a>
 
-            <!-- LinkedIn icon with hover tooltip -->
-            <a href="https://www.linkedin.com/in/segun-oladeinde/" target="_blank" title="Connect on LinkedIn">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="28"/>
+            <a href="https://www.linkedin.com/in/segun-oladeinde/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="25"/>
             </a>
         </div>
         """,
         unsafe_allow_html=True
-    )
+)
 
     st.markdown("---")
-    st.header("🚀 Quick Stats")
+    
+   
+    
+    
 
     st.markdown("---")
     
