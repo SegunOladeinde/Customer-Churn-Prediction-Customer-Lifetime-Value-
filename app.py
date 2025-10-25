@@ -213,24 +213,40 @@ encoding_mapping, test_data, model_comparison, feature_comp = load_supporting_da
 # --- 5. SIDEBAR ---
 
 with st.sidebar:
-    st.title("Churn Prediction  & CLV Insights")
-    st.markdown("### Developed by Segun Oladeinde")
-    st.markdown("**Data Scientist & ML Engineer**")
-
- # Add social links with icons
+    # Main title — bold, larger, and clearer
+    st.markdown("<h1 style='font-weight: 900;'>🎯 Churn Prediction & CLV Insights</h1>", unsafe_allow_html=True)
+    
+    # Developer name
+    st.markdown("## Developed by Segun Oladeinde")
+    
+    # Centered professional title
+    st.markdown(
+        "<p style='text-align: center; font-weight: bold;'>Data Scientist & ML Engineer</p>",
+        unsafe_allow_html=True
+    )
+    
+    st.markdown("---")
+    
+    # Social media links with hover tooltips and spacing
     st.markdown(
         """
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <a href="https://github.com/SegunOladeinde" target="_blank">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="25"/>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 20px; padding-top: 10px;">
+            <!-- GitHub icon with hover tooltip -->
+            <a href="https://github.com/SegunOladeinde" target="_blank" title="Visit my GitHub">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="28"/>
             </a>
-            <a href="https://www.linkedin.com/in/segun-oladeinde/" target="_blank">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="25"/>
+
+            <!-- LinkedIn icon with hover tooltip -->
+            <a href="https://www.linkedin.com/in/segun-oladeinde/" target="_blank" title="Connect on LinkedIn">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="28"/>
             </a>
         </div>
         """,
         unsafe_allow_html=True
     )
+
+    st.markdown("---")
+    st.header("🚀 Quick Stats")
 
     st.markdown("---")
     
