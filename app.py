@@ -29,7 +29,7 @@ from train_models import create_interaction_features
 # Set page config for a modern, wide layout
 st.set_page_config(
     page_title="ChurnGuard AI | Predict & Retain",
-    page_icon="🛡️",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -213,8 +213,25 @@ encoding_mapping, test_data, model_comparison, feature_comp = load_supporting_da
 # --- 5. SIDEBAR ---
 
 with st.sidebar:
-    st.title(" Seg's Churn Prediction")
-    st.markdown("### Churn Prediction & CLV Insights")
+    st.title("Churn Prediction  & CLV Insights")
+    st.markdown("### Developed by Segun Oladeinde")
+    st.markdown("**Data Scientist & ML Engineer**")
+
+ # Add social links with icons
+    st.markdown(
+        """
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <a href="https://github.com/SegunOladeinde" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="25"/>
+            </a>
+            <a href="https://www.linkedin.com/in/segun-oladeinde/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="25"/>
+            </a>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.markdown("---")
     
     if test_data is not None:
@@ -243,7 +260,7 @@ if lr_model is None or test_data is None:
     st.error("Application cannot start because essential model or data files are missing. Please check the logs.")
 else:
     # Create tabs for a clean, organized interface
-    tab1, tab2, tab3 = st.tabs(["🔮 Predict Churn", "📈 Model Performance", "💰 CLV Analysis"])
+    tab1, tab2, tab3 = st.tabs(["🎯 Predict Churn", "📊 Model Performance", "💰 CLV Analysis"])
 
     # ============================================================
     # TAB 1: PREDICT CHURN
@@ -291,7 +308,7 @@ else:
 
         # Centralized prediction button
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("🤖 Predict Churn Risk", type="primary", use_container_width=True):
+        if st.button(" Predict Churn Risk", type="primary", use_container_width=True):
             
             # --- Data Preparation for Prediction (No logic change) ---
             phone_svc = 1 if phone_service == "Yes" else 0
