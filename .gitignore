@@ -12,9 +12,11 @@ env/
 # VS Code
 .vscode/
 
-# Data files - Exclude these as they are not needed for the deployed app
+# Data files - Exclude large CSVs, but keep essential files
 data/raw/
-data/processed/
+data/processed/train.csv
+data/processed/val.csv
+data/processed/clv_insights.txt
 
 # Notebooks - Not needed for deployment
 notebooks/
