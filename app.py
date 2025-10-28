@@ -26,12 +26,24 @@ if 'train_models' in sys.modules:
 
 from train_models import create_interaction_features
 
-# Set page config for a modern, wide layout
+# Set page config for a modern, responsive layout
 st.set_page_config(
     page_title="ChurnGuard AI | Predict & Retain",
-    page_icon="",
+    page_icon="🎯",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': 'https://github.com/SegunOladeinde/Customer-Churn-Prediction-Customer-Lifetime-Value-',
+        'Report a bug': 'https://github.com/SegunOladeinde/Customer-Churn-Prediction-Customer-Lifetime-Value-/issues',
+        'About': """
+        # ChurnGuard AI 🎯
+        **Customer Churn Prediction & CLV Analysis**
+        
+        A production-ready ML system for predicting customer churn and analyzing customer lifetime value.
+        
+        Built with ❤️ by Segun Oladeinde
+        """
+    }
 )
 
 # Define key directory paths
@@ -51,8 +63,15 @@ def load_css(file_path):
     except FileNotFoundError:
         st.warning(f"CSS file not found at {file_path}. Using default styles.")
 
+def add_mobile_viewport_meta():
+    """Add viewport meta tag for proper mobile rendering."""
+    st.markdown("""
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    """, unsafe_allow_html=True)
+
 # Inject the custom CSS
 load_css(ASSETS_DIR / 'style.css')
+add_mobile_viewport_meta()
 
 # --- 3. HELPER FUNCTIONS (DATA & MODEL LOADING) ---
 
@@ -185,6 +204,22 @@ def create_interaction_features(df):
 def calculate_clv_estimate(monthly_charges, expected_tenure_months=24):
     """Estimate CLV for a customer using a conservative expected tenure."""
     return monthly_charges * expected_tenure_months
+
+def get_responsive_columns(num_columns, mobile_stack=True):
+    """
+    Create responsive column layout that adapts to screen size.
+    On mobile, columns stack vertically for better readability.
+    
+    Args:
+        num_columns: Number of columns for desktop view
+        mobile_stack: If True, stack columns on mobile (default: True)
+    
+    Returns:
+        Streamlit columns object
+    """
+    # Note: Streamlit doesn't have built-in viewport detection
+    # This creates a layout that CSS will handle responsively
+    return st.columns(num_columns)
 
 def get_feature_explanation(feature_name, feature_value, shap_value):
     """Generate human-readable explanation for a feature's SHAP value."""

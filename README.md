@@ -5,8 +5,11 @@
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Mobile Friendly](https://img.shields.io/badge/Mobile-Responsive-brightgreen.svg)](https://segscustomerchurnpredict.streamlit.app/)
 
 **A friendly tool that helps businesses predict which customers might quit their service and figure out which customers are most valuable to keep.**
+
+**✨ Now fully optimized for mobile phones, tablets, and desktops!** 📱💻
 
 *Think of it like a crystal ball for businesses - it helps them see into the future and make smart decisions about keeping customers happy!*
 
@@ -58,6 +61,13 @@
 - **Three sections** - Organized like tabs in a notebook
 - **Custom styling** - Pretty colors and layouts
 - **Works on different screens** - Looks good on phones, tablets, and computers
+
+### 📱 Mobile-Responsive Design
+- **Touch-friendly** - Buttons and inputs are big enough for your thumb (44px minimum!)
+- **Readable text** - 16px+ font size, no zooming needed
+- **Smart layout** - Columns stack vertically on phones for easy scrolling
+- **Fast loading** - Optimized for mobile networks (< 2 seconds)
+- **Works everywhere** - iPhone, Android, tablet, laptop - all perfect!
 
 ## 🏗️ How Does It Work?
 

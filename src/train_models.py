@@ -72,7 +72,7 @@ def load_data():
 def create_interaction_features(X):
     """
     Create comprehensive interaction features to capture non-linear relationships.
-    Advanced feature engineering to push model performance toward 92-95% AUC.
+    Advanced feature engineering to push model performance toward 80-85% AUC.
     
     Categories of features:
     1. Risk amplifiers (combinations that multiply churn risk)

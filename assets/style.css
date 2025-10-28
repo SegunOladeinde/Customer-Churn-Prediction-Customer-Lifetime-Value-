@@ -1,17 +1,35 @@
-/* style.css */
+/* style.css - Mobile-First Responsive Design */
 
 /* --- General Body & Font --- */
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background-color: #F0F2F6; /* Light gray background */
 }
 
 /* --- Main App Container --- */
 .main .block-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 100%;
+}
+
+/* Desktop/Tablet: Larger padding */
+@media (min-width: 768px) {
+    .main .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .main .block-container {
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
 }
 
 /* --- Custom Headers --- */
@@ -29,9 +47,18 @@ body {
 div[data-testid="stVerticalBlock"] > [style*="flex-direction: column;"] > [data-testid="stVerticalBlock"] {
     border: 1px solid #E6E6E6;
     border-radius: 0.5rem;
-    padding: 1.5rem;
+    padding: 1rem;
     background-color: #FFFFFF;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    div[data-testid="stVerticalBlock"] > [style*="flex-direction: column;"] > [data-testid="stVerticalBlock"] {
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+        margin-bottom: 1rem;
+    }
 }
 
 /* --- Metric Styling --- */
@@ -39,18 +66,38 @@ div[data-testid="stMetric"] {
     background-color: #F8F9FA;
     border: 1px solid #E6E6E6;
     border-radius: 0.5rem;
-    padding: 1rem;
+    padding: 0.75rem;
     text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    div[data-testid="stMetric"] {
+        padding: 1rem;
+    }
 }
 
 div[data-testid="stMetric"] > label {
     font-weight: 600;
     color: #495057;
+    font-size: 0.85rem;
+}
+
+@media (min-width: 768px) {
+    div[data-testid="stMetric"] > label {
+        font-size: 1rem;
+    }
 }
 
 div[data-testid="stMetric"] > div {
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     font-weight: 700;
+}
+
+@media (min-width: 768px) {
+    div[data-testid="stMetric"] > div {
+        font-size: 1.75rem;
+    }
 }
 
 /* --- Button Styling --- */
@@ -63,6 +110,14 @@ div[data-testid="stMetric"] > div {
     color: white;
     border: none;
     transition: background-color 0.2s ease;
+    font-size: 0.95rem;
+    min-height: 44px; /* iOS/Android touch target minimum */
+}
+
+@media (min-width: 768px) {
+    .stButton > button {
+        font-size: 1rem;
+    }
 }
 
 .stButton > button:hover {
@@ -70,23 +125,48 @@ div[data-testid="stMetric"] > div {
     color: white;
 }
 
+.stButton > button:active {
+    background-color: #004a94;
+}
+
 /* --- Tab Styling --- */
 .stTabs [data-baseweb="tab-list"] {
-    gap: 24px;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 24px;
+        flex-wrap: nowrap;
+    }
 }
 
 .stTabs [data-baseweb="tab"] {
-    height: 50px;
-    white-space: pre-wrap;
+    height: auto;
+    min-height: 44px;
+    white-space: normal;
     background-color: transparent;
     border-radius: 4px 4px 0px 0px;
-    gap: 12px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+    .stTabs [data-baseweb="tab"] {
+        height: 50px;
+        white-space: pre-wrap;
+        gap: 12px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 1rem;
+    }
 }
 
 .stTabs [aria-selected="true"] {
     background-color: #FFFFFF;
+    font-weight: 600;
 }
 
 /* --- Expander Styling --- */
@@ -98,4 +178,217 @@ div[data-testid="stMetric"] > div {
 
 .st-emotion-cache-p5msec summary {
     font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .st-emotion-cache-p5msec summary {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+}
+
+/* ========================================= */
+/* MOBILE-SPECIFIC ENHANCEMENTS */
+/* ========================================= */
+
+/* Mobile: Improve text readability */
+@media (max-width: 767px) {
+    
+    /* Increase base font size on mobile */
+    body, .stMarkdown, p, li {
+        font-size: 16px !important; /* Prevents iOS zoom on input focus */
+        line-height: 1.6;
+    }
+    
+    /* Headers - responsive sizing */
+    h1 {
+        font-size: 1.75rem !important;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem !important;
+        line-height: 1.4;
+        margin-bottom: 0.75rem;
+    }
+    
+    h3 {
+        font-size: 1.25rem !important;
+        line-height: 1.4;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Sidebar improvements */
+    section[data-testid="stSidebar"] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    section[data-testid="stSidebar"] > div {
+        padding: 1rem !important;
+    }
+    
+    /* Input fields - larger touch targets */
+    .stTextInput > div > div > input,
+    .stNumberInput > div > div > input,
+    .stSelectbox > div > div,
+    .stRadio > div {
+        font-size: 16px !important;
+        min-height: 44px !important;
+        padding: 0.75rem !important;
+    }
+    
+    /* Select dropdown */
+    .stSelectbox > div > div > div {
+        font-size: 16px !important;
+    }
+    
+    /* Better spacing for stacked elements */
+    div[data-testid="column"] {
+        padding: 0.25rem !important;
+    }
+    
+    /* Images - responsive sizing */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Tables - horizontal scroll */
+    .stDataFrame {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    table {
+        font-size: 0.85rem !important;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    /* Alert boxes */
+    .stAlert {
+        font-size: 0.9rem !important;
+        padding: 0.75rem !important;
+    }
+    
+    /* Success/Warning/Error messages */
+    .stSuccess, .stWarning, .stError, .stInfo {
+        font-size: 0.95rem !important;
+        padding: 0.75rem 1rem !important;
+        margin: 0.5rem 0 !important;
+    }
+    
+    /* Improve chart visibility */
+    div[data-testid="stImage"] {
+        margin-bottom: 1rem;
+    }
+    
+    /* Better spacing between sections */
+    .element-container {
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Improve code blocks */
+    .stCodeBlock {
+        font-size: 0.85rem !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* File uploader */
+    .stFileUploader {
+        font-size: 0.9rem !important;
+    }
+    
+    /* Download button */
+    .stDownloadButton > button {
+        font-size: 0.95rem !important;
+        min-height: 44px !important;
+    }
+}
+
+/* Tablet-specific adjustments (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    
+    .main .block-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    
+    h1 {
+        font-size: 2rem !important;
+    }
+    
+    h2 {
+        font-size: 1.75rem !important;
+    }
+    
+    /* Two-column layouts work better on tablet */
+    div[data-testid="column"]:nth-child(3) {
+        width: 100% !important;
+    }
+}
+
+/* Improve touch interactions for all mobile devices */
+@media (hover: none) and (pointer: coarse) {
+    
+    /* Larger tap targets */
+    button, a, input, select, textarea {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    *:hover {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Improve button feedback */
+    button:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+    /* Add dark mode styles if needed */
+}
+
+/* Accessibility improvements */
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    button, .stButton > button {
+        border: 2px solid currentColor !important;
+    }
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    .main .block-container {
+        padding: 1cm;
+    }
+    
+    button, .stButton {
+        display: none !important;
+    }
+    
+    img {
+        max-width: 100%;
+        page-break-inside: avoid;
+    }
 }
