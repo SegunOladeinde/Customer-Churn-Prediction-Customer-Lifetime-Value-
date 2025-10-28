@@ -56,6 +56,15 @@ body {
     section[data-testid="stSidebar"][aria-expanded="true"] {
         width: 100% !important;
         max-width: 100% !important;
+        z-index: 1001 !important; /* Above overlay */
+        position: relative !important;
+    }
+    
+    /* Sidebar inner content should be visible */
+    section[data-testid="stSidebar"][aria-expanded="true"] > div {
+        z-index: 1002 !important;
+        position: relative !important;
+        background-color: #FFFFFF !important;
     }
     
     /* Ensure main content takes full width when sidebar is closed */
@@ -73,6 +82,20 @@ body {
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
         z-index: 999;
+    }
+    
+    /* Ensure dropdown menus appear above everything */
+    div[data-baseweb="select"],
+    div[data-baseweb="popover"],
+    ul[role="listbox"] {
+        z-index: 1003 !important;
+    }
+    
+    /* Make sure input fields are visible and touchable */
+    input, select, textarea {
+        background-color: #FFFFFF !important;
+        z-index: 1002 !important;
+        position: relative !important;
     }
 }
 
@@ -339,15 +362,12 @@ div[data-testid="stMetric"] > div {
     }
     
     /* Additional sidebar fixes for mobile */
-    /* Force sidebar to be truly hidden when collapsed */
+    /* Smooth transitions for sidebar */
     section[data-testid="stSidebar"] {
         transition: all 0.3s ease !important;
     }
     
-    section[data-testid="stSidebar"][aria-expanded="false"] {
-        transform: translateX(-100%) !important;
-        visibility: hidden !important;
-    }
+    /* NO transform or visibility on collapsed - handled by display:none above */
     
     /* Ensure content doesn't get pushed */
     .main {
@@ -359,6 +379,12 @@ div[data-testid="stMetric"] > div {
     button[kind="header"] {
         padding: 0.5rem !important;
         min-height: 44px !important;
+    }
+    
+    /* Ensure sidebar content is scrollable */
+    section[data-testid="stSidebar"][aria-expanded="true"] {
+        overflow-y: auto !important;
+        max-height: 100vh !important;
     }
     
     /* Download button */
