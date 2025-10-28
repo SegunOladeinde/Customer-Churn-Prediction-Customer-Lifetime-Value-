@@ -43,6 +43,39 @@ body {
     padding: 2rem 1rem;
 }
 
+/* Mobile: Hide sidebar by default, full width when opened */
+@media (max-width: 767px) {
+    /* Hide collapsed sidebar completely */
+    section[data-testid="stSidebar"][aria-expanded="false"] {
+        display: none !important;
+        width: 0 !important;
+        min-width: 0 !important;
+    }
+    
+    /* Full width sidebar when expanded */
+    section[data-testid="stSidebar"][aria-expanded="true"] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Ensure main content takes full width when sidebar is closed */
+    section[data-testid="stSidebar"][aria-expanded="false"] ~ .main {
+        margin-left: 0 !important;
+    }
+    
+    /* Add overlay effect when sidebar is open */
+    section[data-testid="stSidebar"][aria-expanded="true"]::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+}
+
 /* --- Custom Containers --- */
 div[data-testid="stVerticalBlock"] > [style*="flex-direction: column;"] > [data-testid="stVerticalBlock"] {
     border: 1px solid #E6E6E6;
@@ -303,6 +336,29 @@ div[data-testid="stMetric"] > div {
     /* File uploader */
     .stFileUploader {
         font-size: 0.9rem !important;
+    }
+    
+    /* Additional sidebar fixes for mobile */
+    /* Force sidebar to be truly hidden when collapsed */
+    section[data-testid="stSidebar"] {
+        transition: all 0.3s ease !important;
+    }
+    
+    section[data-testid="stSidebar"][aria-expanded="false"] {
+        transform: translateX(-100%) !important;
+        visibility: hidden !important;
+    }
+    
+    /* Ensure content doesn't get pushed */
+    .main {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    
+    /* Hide sidebar toggle button styling improvement */
+    button[kind="header"] {
+        padding: 0.5rem !important;
+        min-height: 44px !important;
     }
     
     /* Download button */
