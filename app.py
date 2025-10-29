@@ -491,11 +491,11 @@ else:
                 with st.container(border=True):
                     st.subheader("💡 Recommended Action")
                     if risk_level == "HIGH RISK":
-                        st.error(f"**URGENT:** This customer is at high risk. Prioritize immediate retention efforts. Potential revenue at risk: **${clv_estimate:,.2f}**.")
+                        st.error(f"**Priority: Immediate Retention Required**  \nCustomer at critical risk. Deploy urgent retention strategy to protect **${clv_estimate:,.2f}** in potential revenue.")
                     elif risk_level == "MEDIUM RISK":
-                        st.warning("**MONITOR:** This customer shows moderate risk. Consider proactive engagement or loyalty incentives.")
+                        st.warning("**Priority: Proactive Engagement**  \nModerate churn risk detected. Implement targeted loyalty program or personalized outreach to strengthen retention.")
                     else:
-                        st.success("**RETAIN & GROW:** This customer is loyal. Focus on upselling and maximizing their lifetime value.")
+                        st.success("**Priority: Growth & Upsell**  \nCustomer shows strong loyalty. Focus on expanding relationship through cross-sell opportunities and premium offerings.")
 
     # ============================================================
     # TAB 2: MODEL PERFORMANCE

@@ -133,6 +133,16 @@ body {
     /* Streamlit selectbox specific fixes */
     section[data-testid="stSidebar"] .stSelectbox > div > div {
         background-color: #FFFFFF !important;
+        color: #000000 !important;
+    }
+    
+    /* Fix selected value text visibility in sidebar */
+    section[data-testid="stSidebar"] .stSelectbox div[role="button"] > div,
+    section[data-testid="stSidebar"] .stSelectbox span {
+        color: #000000 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        font-weight: 400 !important;
     }
     
     /* Fix for number inputs and text inputs */
@@ -341,9 +351,25 @@ div[data-testid="stMetric"] > div {
         padding: 0.75rem !important;
     }
     
-    /* Select dropdown */
+    /* Select dropdown - FIXED for mobile selected value visibility */
     .stSelectbox > div > div > div {
         font-size: 16px !important;
+        color: #000000 !important;
+        background-color: #FFFFFF !important;
+    }
+    
+    /* Ensure selected value text is visible */
+    .stSelectbox [data-baseweb="select"] > div,
+    .stSelectbox [data-baseweb="select"] span {
+        color: #000000 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Target the actual displayed selected value */
+    .stSelectbox div[role="button"] > div {
+        color: #000000 !important;
+        font-weight: 400 !important;
     }
     
     /* Better spacing for stacked elements */
