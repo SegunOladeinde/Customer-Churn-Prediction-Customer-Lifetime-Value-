@@ -136,13 +136,24 @@ body {
         color: #000000 !important;
     }
     
-    /* Fix selected value text visibility in sidebar */
+    /* COMPREHENSIVE: Fix selected value text visibility in sidebar - all possible selectors */
     section[data-testid="stSidebar"] .stSelectbox div[role="button"] > div,
-    section[data-testid="stSidebar"] .stSelectbox span {
+    section[data-testid="stSidebar"] .stSelectbox div[role="button"] span,
+    section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] > div,
+    section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] span,
+    section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"] div[aria-live="polite"],
+    section[data-testid="stSidebar"] .stSelectbox div[class*="singleValue"],
+    section[data-testid="stSidebar"] .stSelectbox [class*="ValueContainer"] > div {
         color: #000000 !important;
         opacity: 1 !important;
         visibility: visible !important;
         font-weight: 400 !important;
+        display: block !important;
+    }
+    
+    /* Force all text inside sidebar selectbox to be visible */
+    section[data-testid="stSidebar"] .stSelectbox * {
+        color: inherit !important;
     }
     
     /* Fix for number inputs and text inputs */
@@ -351,25 +362,55 @@ div[data-testid="stMetric"] > div {
         padding: 0.75rem !important;
     }
     
-    /* Select dropdown - FIXED for mobile selected value visibility */
+    /* Select dropdown - COMPREHENSIVE FIX for mobile selected value visibility */
     .stSelectbox > div > div > div {
         font-size: 16px !important;
         color: #000000 !important;
         background-color: #FFFFFF !important;
     }
     
-    /* Ensure selected value text is visible */
+    /* Ensure selected value text is visible - Multiple targeting approaches */
     .stSelectbox [data-baseweb="select"] > div,
-    .stSelectbox [data-baseweb="select"] span {
+    .stSelectbox [data-baseweb="select"] span,
+    .stSelectbox [data-baseweb="select"] div[aria-live="polite"],
+    .stSelectbox [data-baseweb="select"] div[class*="SingleValue"] {
         color: #000000 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+    }
+    
+    /* Target the actual displayed selected value - all possible containers */
+    .stSelectbox div[role="button"] > div,
+    .stSelectbox div[role="button"] span,
+    .stSelectbox div[role="button"] div[class*="singleValue"],
+    .stSelectbox [class*="ValueContainer"] > div {
+        color: #000000 !important;
+        font-weight: 400 !important;
         opacity: 1 !important;
         visibility: visible !important;
     }
     
-    /* Target the actual displayed selected value */
-    .stSelectbox div[role="button"] > div {
+    /* Force all text inside selectbox to be visible */
+    .stSelectbox * {
+        color: inherit !important;
+    }
+    
+    /* Override any Streamlit inline styles that might hide text */
+    .stSelectbox [data-baseweb="select"] {
         color: #000000 !important;
-        font-weight: 400 !important;
+    }
+    
+    /* NUCLEAR OPTION: Force text color on all selectbox children (mobile only) */
+    .stSelectbox, .stSelectbox > *, .stSelectbox * {
+        color: #000000 !important;
+    }
+    
+    /* Prevent transparent or white text on mobile */
+    .stSelectbox [data-baseweb="select"] *,
+    section[data-testid="stSidebar"] .stSelectbox * {
+        color: #000000 !important;
+        opacity: 1 !important;
     }
     
     /* Better spacing for stacked elements */
