@@ -31,7 +31,7 @@ st.set_page_config(
     page_title="ChurnGuard AI | Predict & Retain",
     page_icon="🎯",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",  # Mobile-first: starts closed, easily opened with tap
     menu_items={
         'Get Help': 'https://github.com/SegunOladeinde/Customer-Churn-Prediction-Customer-Lifetime-Value-',
         'Report a bug': 'https://github.com/SegunOladeinde/Customer-Churn-Prediction-Customer-Lifetime-Value-/issues',
