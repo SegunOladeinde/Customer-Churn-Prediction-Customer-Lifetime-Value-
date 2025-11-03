@@ -1,10 +1,15 @@
 """
-Model Interpretability Script
-Implements SHAP explanations for tree models and coefficient analysis for Logistic Regression.
+Model Interpretability Script - Understanding Why Our AI Makes Decisions
 
-For the Streamlit app, we need:
-1. Global feature importance (which features matter most overall)
-2. Local explanations (why a specific customer is predicted to churn)
+This is like asking a teacher to show their work on a math problem.
+Our AI makes predictions, but we want to know WHY it thinks a customer will leave.
+
+Think of it like: A doctor explaining "You're sick because of these 3 symptoms" instead
+of just saying "You're sick." This helps us trust the AI and make better business decisions.
+
+We do this 2 ways:
+1. Global: Which factors matter most for ALL customers (like "Contract type is super important")
+2. Local: Why THIS specific customer got this prediction (like "Sarah will churn because she has month-to-month contract")
 """
 
 import pandas as pd
@@ -24,7 +29,15 @@ os.makedirs(FIGURES_DIR, exist_ok=True)
 
 
 def load_models_and_data():
-    """Load trained models and test data."""
+    """
+    Opens the saved AI models and test data files we created earlier.
+    
+    Like a chef getting all the ingredients and tools ready before cooking.
+    We load our 3 trained AIs (Logistic Regression, Random Forest, XGBoost) and
+    the test data to see how they make decisions.
+    
+    What you get back: All 3 AI models + test customer data ready to analyze
+    """
     print("=" * 60)
     print("LOADING MODELS AND DATA")
     print("=" * 60)
@@ -60,10 +73,14 @@ def load_models_and_data():
 
 def explain_logistic_regression(model, X, feature_names):
     """
-    Get feature importance from Logistic Regression coefficients.
+    Figures out which customer details matter most to the Logistic Regression AI.
     
-    For linear models, coefficients tell us feature importance directly.
-    We use absolute standardized coefficients.
+    Like asking a teacher: "Which chapters of the textbook are most important for the exam?"
+    The AI has "weights" for each customer detail - bigger weight = more important.
+    We find the biggest weights and make a chart showing the top factors.
+    
+    What you give it: The trained AI + customer data + names of all the details
+    What you get back: A chart and file showing which factors are most important
     """
     print("\n" + "=" * 60)
     print("LOGISTIC REGRESSION: Coefficient Analysis")
@@ -116,11 +133,14 @@ def explain_logistic_regression(model, X, feature_names):
 
 def explain_tree_models_shap(model, X, model_name, sample_size=500):
     """
-    Use SHAP TreeExplainer for Random Forest and XGBoost.
+    Uses a special detective tool called SHAP to understand Random Forest and XGBoost decisions.
     
-    SHAP values explain how much each feature contributed to a prediction.
-    Positive SHAP = pushes prediction toward churn.
-    Negative SHAP = pushes prediction away from churn.
+    Like a sports commentator explaining "The team scored because of 3 great plays."
+    SHAP shows us which customer details pushed the AI to say "This person will leave!"
+    Positive SHAP = pushes toward leaving. Negative SHAP = pushes toward staying.
+    
+    What you give it: One of our tree-based AIs + customer data + a nickname for it
+    What you get back: Charts and files showing what drives each prediction
     """
     print("\n" + "=" * 60)
     print(f"{model_name.upper()}: SHAP Analysis")
@@ -198,7 +218,14 @@ def explain_tree_models_shap(model, X, model_name, sample_size=500):
 
 def compare_feature_importance(lr_importance, rf_importance, xgb_importance):
     """
-    Compare feature importance across all three models.
+    Puts all 3 AI models side-by-side to see if they agree on what's important.
+    
+    Like asking 3 teachers "What's most important for the exam?" and comparing their answers.
+    If all 3 say "Contract type is #1", we REALLY know it's super important!
+    Creates a chart showing which factors all the AIs agree on.
+    
+    What you give it: Importance scores from all 3 models
+    What you get back: A comparison chart showing consensus on top factors
     """
     print("\n" + "=" * 60)
     print("COMPARING FEATURE IMPORTANCE ACROSS MODELS")
@@ -261,8 +288,14 @@ def compare_feature_importance(lr_importance, rf_importance, xgb_importance):
 
 def create_local_explanation_example(explainer, model, X_sample, model_name):
     """
-    Create an example local explanation for a single high-risk customer.
-    This demonstrates what we'll show in the Streamlit app.
+    Shows WHY a specific customer got their churn prediction (a real example).
+    
+    Like a doctor explaining: "YOU have a fever because of THESE specific symptoms."
+    We pick one high-risk customer and break down exactly which factors made the AI
+    think they'll leave. This is what users see in the app for their predictions!
+    
+    What you give it: SHAP explainer + AI model + sample customers + model nickname
+    What you get back: A detailed waterfall chart showing the "story" of one prediction
     """
     print("\n" + "=" * 60)
     print(f"{model_name.upper()}: Example Local Explanation")
@@ -323,7 +356,12 @@ def create_local_explanation_example(explainer, model, X_sample, model_name):
 
 
 def main():
-    """Main execution."""
+    """
+    The orchestra conductor - runs all the interpretation functions in order.
+    
+    Like a science fair presentation: Load the models → Show what's important globally
+    → Show a specific example → Compare all models → Save everything for the app to use.
+    """
     print("=" * 60)
     print("🔍 MODEL INTERPRETABILITY PIPELINE")
     print("=" * 60)

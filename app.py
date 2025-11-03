@@ -1,6 +1,12 @@
 """
-Customer Churn Prediction & CLV Analysis
-Streamlit App - Modernized UI/UX
+ChurnGuard AI - Customer Churn Prediction Dashboard
+
+This is the pretty website where users can:
+- Type in customer information and get a prediction: "Will they leave?"
+- See how smart our AI models are (like looking at report cards)
+- Explore which customers are worth the most money
+
+Think of it like a crystal ball for businesses - but powered by math and AI!
 """
 
 import streamlit as st
@@ -56,7 +62,10 @@ ASSETS_DIR = BASE_DIR / 'assets'
 # --- 2. UI/UX ENHANCEMENTS ---
 
 def load_css(file_path):
-    """Inject custom CSS for styling."""
+    """
+    Loads our pretty design colors and fonts to make the website look professional.
+    Like putting on makeup and nice clothes before going out!
+    """
     try:
         with open(file_path) as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -64,7 +73,10 @@ def load_css(file_path):
         st.warning(f"CSS file not found at {file_path}. Using default styles.")
 
 def add_mobile_viewport_meta():
-    """Add viewport meta tag for proper mobile rendering."""
+    """
+    Tells mobile phones: "Hey, display this website nicely on small screens!"
+    Like telling a TV to switch to widescreen mode.
+    """
     st.markdown("""
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     """, unsafe_allow_html=True)
@@ -77,7 +89,11 @@ add_mobile_viewport_meta()
 
 @st.cache_resource
 def load_models():
-    """Load all trained models, scaler, and create SHAP explainers."""
+    """
+    Opens the saved AI brain files so they're ready to make predictions.
+    Like waking up 3 sleeping robots who studied customer data all night!
+    Caches them so we don't have to reload every time (saves time).
+    """
     try:
         lr_model = joblib.load(MODELS_DIR / 'logistic_regression.pkl')
         rf_model = joblib.load(MODELS_DIR / 'random_forest.pkl')
@@ -95,7 +111,10 @@ def load_models():
 
 @st.cache_data
 def load_supporting_data():
-    """Load encoding mappings, test data, and model comparison metrics."""
+    """
+    Loads extra helpful files: translation dictionaries, test data, and report cards.
+    Like a teacher gathering answer keys and old test results before class starts!
+    """
     try:
         with open(DATA_DIR / 'encoding_mapping.json', 'r') as f:
             encoding_mapping = json.load(f)
@@ -112,8 +131,14 @@ def load_supporting_data():
 # --- (No changes to the core logic of these functions) ---
 def create_interaction_features(df):
     """
-    CRITICAL: Must replicate exact feature engineering from train_models.py
-    This creates all 31 interaction features to match the 52 total features
+    Creates 31 super-smart detective clues by combining customer info in clever ways!
+    
+    CRITICAL: This MUST match EXACTLY what we did during training in train_models.py.
+    Like following the exact same recipe - if we change anything, the AI gets confused!
+    Takes 21 basic customer details and expands them to 52 features total.
+    
+    What you give it: Basic customer info (age, services, payment, etc.)
+    What you get back: Same info PLUS 31 brilliant combination features the AI needs
     """
     df = df.copy()
     
@@ -202,27 +227,37 @@ def create_interaction_features(df):
     return df
 
 def calculate_clv_estimate(monthly_charges, expected_tenure_months=24):
-    """Estimate CLV for a customer using a conservative expected tenure."""
+    """
+    Quickly calculates how much money a customer is worth over 2 years.
+    Like saying: "If they pay $50/month for 24 months = $1,200 total value!"
+    """
     return monthly_charges * expected_tenure_months
 
 def get_responsive_columns(num_columns, mobile_stack=True):
     """
-    Create responsive column layout that adapts to screen size.
-    On mobile, columns stack vertically for better readability.
+    Creates smart webpage columns that rearrange on phones vs computers.
     
-    Args:
-        num_columns: Number of columns for desktop view
-        mobile_stack: If True, stack columns on mobile (default: True)
+    Like furniture that automatically adjusts - on a big screen (desktop), things sit side-by-side.
+    On a small screen (phone), they stack vertically so you can read them better!
     
-    Returns:
-        Streamlit columns object
+    What you give it: Number of columns you want (like 3)
+    What you get back: Smart columns that adapt to screen size
     """
     # Note: Streamlit doesn't have built-in viewport detection
     # This creates a layout that CSS will handle responsively
     return st.columns(num_columns)
 
 def get_feature_explanation(feature_name, feature_value, shap_value):
-    """Generate human-readable explanation for a feature's SHAP value."""
+    """
+    Translates AI math into plain English explanations you can understand!
+    
+    Like a translator at the UN: the AI speaks "math", we need "human language".
+    Takes SHAP values (AI importance scores) and converts them to sentences like:
+    "Month-to-month contract INCREASES churn risk" or "12 months tenure DECREASES risk"
+    
+    What you give it: Feature name, customer's value for that feature, AI's importance score
+    What you get back: A readable sentence explaining why the AI thinks what it thinks
+    """
     impact = "increases" if shap_value > 0 else "decreases"
     
     explanations = {

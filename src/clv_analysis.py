@@ -1,7 +1,12 @@
 """
-CLV Analysis Script
-Analyzes Customer Lifetime Value and its relationship with churn.
-Creates visualizations for business insights and the Streamlit app.
+Customer Value Analysis Script
+
+This is like a detective that studies how much each customer is worth
+and figures out which customers are most likely to leave.
+
+Think of it like: A store manager analyzing which shoppers spend the most
+and which ones are about to stop shopping there. Then creating colorful
+charts to show the boss what's happening.
 """
 
 import pandas as pd
@@ -24,7 +29,16 @@ os.makedirs(FIGURES_DIR, exist_ok=True)
 
 
 def load_processed_data():
-    """Load the processed train, val, and test datasets."""
+    """
+    Opens our customer data files that have already been cleaned and organized.
+    
+    Think of this like opening 3 different folders of customer information:
+    - Training folder: Data to teach our AI (like practice problems)
+    - Validation folder: Data to test our AI while it's learning (like homework)
+    - Test folder: Final exam data to see how smart our AI really got
+    
+    What you get back: 4 sets of customer data (all combined + the 3 separate folders)
+    """
     print("=" * 60)
     print("LOADING PROCESSED DATA")
     print("=" * 60)
@@ -47,10 +61,13 @@ def load_processed_data():
 
 def analyze_clv_distribution(df):
     """
-    Analyze and visualize CLV distribution.
+    Creates charts showing how customer values are spread out.
     
-    Args:
-        df (pd.DataFrame): Full dataset with CLV
+    Like making a graph showing how much allowance each kid in a class gets,
+    then seeing if the rich kids or poor kids are more likely to switch schools.
+    
+    What you give it: A table of customer data with their values
+    What you get: Pretty charts saved as image files showing the patterns
     """
     print("\n" + "=" * 60)
     print("CLV DISTRIBUTION ANALYSIS")
@@ -106,11 +123,14 @@ def analyze_clv_distribution(df):
 
 def analyze_clv_quartiles(df):
     """
-    Analyze churn rate by CLV quartile.
-    This is the KEY business insight!
+    Divides customers into 4 groups (like cutting a pie into 4 pieces) based on value.
+    Then checks which group has the most people leaving.
     
-    Args:
-        df (pd.DataFrame): Full dataset with CLV
+    Like organizing students into: Struggling, Average, Good, and Excellent groups,
+    then seeing which group skips school the most. This is super important for business!
+    
+    What you give it: A table of customer data
+    What you get: Charts and numbers showing which customer groups are leaving
     """
     print("\n" + "=" * 60)
     print("CLV QUARTILE ANALYSIS")
@@ -217,10 +237,13 @@ def analyze_clv_quartiles(df):
 
 def generate_insights(df):
     """
-    Generate written business insights based on CLV analysis.
+    Writes a simple report explaining what the customer data tells us in plain English.
     
-    Args:
-        df (pd.DataFrame): Full dataset with CLV
+    Like a teacher explaining what the test results mean - which students need help,
+    which ones are doing great, and what the school should do about it.
+    
+    What you give it: A table of customer data
+    What you get: A text file with 3 key business recommendations written for humans
     """
     print("\n" + "=" * 60)
     print("BUSINESS INSIGHTS")
@@ -285,7 +308,12 @@ def generate_insights(df):
 
 
 def main():
-    """Main execution function."""
+    """
+    The conductor of the orchestra - runs all the other functions in the right order.
+    
+    Like a recipe that says: First open the ingredients (load data), then mix them
+    (analyze), then bake (create charts), then write the review (generate insights).
+    """
     print("\n" + "=" * 60)
     print("🔍 CUSTOMER LIFETIME VALUE (CLV) ANALYSIS")
     print("=" * 60)

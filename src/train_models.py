@@ -1,11 +1,13 @@
 """
-Model Training Script
-Trains three churn prediction models:
-1. Logistic Regression (baseline)
-2. Random Forest
-3. XGBoost
+Model Training Script - Teaching Our AI to Predict!
 
-Includes light hyperparameter tuning and model evaluation.
+This is like training 3 different students to guess which customers will leave:
+1. Logistic Regression: The simple, straightforward student (baseline)
+2. Random Forest: The team player who asks 100 friends for their opinion
+3. XGBoost: The genius student with special tricks to get the best grades
+
+Each student studies the same data but learns differently. We compare them
+to see who's the smartest at predicting customer churn!
 """
 
 import pandas as pd
@@ -35,7 +37,15 @@ os.makedirs(FIGURES_DIR, exist_ok=True)
 
 
 def load_data():
-    """Load the processed train, validation, and test sets."""
+    """
+    Opens the 3 customer data folders we saved earlier (practice, quiz, final exam).
+    
+    Like a teacher opening 3 file cabinets to get ready for class. Also removes any
+    "cheat sheet" information that would make our AI's job too easy (like knowing
+    the customer already left!).
+    
+    What you get back: 6 piles of paper (3 question sheets + 3 answer keys)
+    """
     print("=" * 60)
     print("LOADING DATA")
     print("=" * 60)
@@ -71,19 +81,14 @@ def load_data():
 
 def create_interaction_features(X):
     """
-    Create comprehensive interaction features to capture non-linear relationships.
-    Advanced feature engineering to push model performance toward 80-85% AUC.
+    Creates advanced super-smart clues by combining information in clever ways.
     
-    Categories of features:
-    1. Risk amplifiers (combinations that multiply churn risk)
-    2. Protection factors (combinations that reduce churn)
-    3. Behavioral patterns (usage and payment patterns)
-    4. Price sensitivity indicators
+    Like a detective thinking: "Hmm, senior citizens + fancy internet + no tech support
+    = probably gonna have problems and leave!" We create 20+ of these smart combinations
+    to help our AI catch patterns humans spot easily but computers miss.
     
-    NOTE: Expects X to already have base engineered features:
-    - tenure_bucket (from data_prep.py)
-    - services_count (from data_prep.py)
-    - internet_no_support (from data_prep.py)
+    What you give it: Basic customer information
+    What you get back: Same info PLUS 20+ brilliant detective clues
     """
     X_enhanced = X.copy()
     
@@ -173,10 +178,13 @@ def create_interaction_features(X):
 
 def scale_features(X_train, X_val, X_test):
     """
-    Scale features for Logistic Regression (tree models don't need scaling).
+    Converts all numbers to a common scale (like converting inches to centimeters).
     
-    Returns:
-        Scaled datasets and the scaler object
+    Like adjusting recipe measurements - if one ingredient is measured in TONS and another in
+    GRAMS, we need to make them comparable! Only needed for Logistic Regression (the simple student).
+    
+    What you give it: 3 sets of customer data (practice, quiz, test)
+    What you get back: Same data but all numbers adjusted to play nicely together + the conversion tool
     """
     print("\n" + "=" * 60)
     print("FEATURE SCALING")
@@ -205,16 +213,17 @@ def scale_features(X_train, X_val, X_test):
 
 def evaluate_model(y_true, y_pred, y_pred_proba, model_name="Model"):
     """
-    Evaluate model performance and return metrics.
+    Grades our AI's test to see how well it guessed which customers would leave.
     
-    Args:
-        y_true: True labels
-        y_pred: Predicted labels
-        y_pred_proba: Predicted probabilities
-        model_name: Name of the model
-        
-    Returns:
-        dict: Dictionary of metrics
+    Like a teacher checking a multiple-choice test and giving scores:
+    - Accuracy: How many questions did you get right overall?
+    - Precision: When you said "will leave", were you usually correct?
+    - Recall: Did you catch most of the customers who actually left?
+    - F1: A balanced score combining precision and recall
+    - AUC-ROC: Overall smartness score (higher = better predictor)
+    
+    What you give it: The right answers, AI's guesses, and AI's confidence levels
+    What you get back: A report card with 5 different grades
     """
     metrics = {
         'Model': model_name,
@@ -230,10 +239,13 @@ def evaluate_model(y_true, y_pred, y_pred_proba, model_name="Model"):
 
 def train_logistic_regression(X_train, y_train, X_val, y_val):
     """
-    Train Logistic Regression with light hyperparameter tuning.
+    Teaches our simplest AI student (Logistic Regression) to guess who will leave.
     
-    Returns:
-        Trained model and validation metrics
+    Like a teacher trying different teaching methods (different "C values") to see which
+    helps the student learn best. Tests 8 different approaches and picks the winner!
+    
+    What you give it: Training questions + answers, validation questions + answers
+    What you get back: A trained AI student + their report card with test scores
     """
     print("\n" + "=" * 60)
     print("TRAINING: LOGISTIC REGRESSION")
@@ -290,10 +302,14 @@ def train_logistic_regression(X_train, y_train, X_val, y_val):
 
 def train_random_forest(X_train, y_train, X_val, y_val):
     """
-    Train Random Forest with light hyperparameter tuning.
+    Teaches our team player AI (Random Forest) - 200 decision trees voting together!
     
-    Returns:
-        Trained model and validation metrics
+    Like training a basketball team: we test different coaching strategies (max_depth,
+    min_samples_leaf) to see which helps the 200 players work best together. The team
+    votes on each decision, and majority wins!
+    
+    What you give it: Training questions + answers, validation questions + answers
+    What you get back: A trained forest of 200 AI trees + their report card scores
     """
     print("\n" + "=" * 60)
     print("TRAINING: RANDOM FOREST")
@@ -363,10 +379,14 @@ def train_random_forest(X_train, y_train, X_val, y_val):
 
 def train_xgboost(X_train, y_train, X_val, y_val):
     """
-    Train XGBoost with light hyperparameter tuning.
+    Teaches our genius AI student (XGBoost) - learns from mistakes and keeps improving!
     
-    Returns:
-        Trained model and validation metrics
+    Like a video game where each level gets harder based on what you got wrong last time.
+    Tests 8 different difficulty settings (max_depth, learning_rate) to find the sweet
+    spot where it learns best. Also handles "class imbalance" (more people stay than leave).
+    
+    What you give it: Training questions + answers, validation questions + answers
+    What you get back: Our smartest AI student + their impressive report card
     """
     print("\n" + "=" * 60)
     print("TRAINING: XGBOOST")
@@ -441,10 +461,14 @@ def train_xgboost(X_train, y_train, X_val, y_val):
 
 def compare_models(all_metrics):
     """
-    Create a comparison table of all models.
+    Puts all 3 AI students' report cards side-by-side to see who's the smartest!
     
-    Args:
-        all_metrics: List of metric dictionaries
+    Like a science fair where judges compare 3 projects and pick the winner.
+    Looks at 5 different scores (Accuracy, Precision, Recall, F1, AUC-ROC) and
+    crowns the champion based on AUC-ROC (the most important grade).
+    
+    What you give it: Report cards from all 3 AI models
+    What you get back: A comparison table showing who won + saves it to a file
     """
     print("\n" + "=" * 60)
     print("MODEL COMPARISON (Validation Set)")
@@ -467,7 +491,13 @@ def compare_models(all_metrics):
 
 
 def main():
-    """Main training pipeline."""
+    """
+    The master conductor running the entire AI training show!
+    
+    Like a movie director coordinating: load data → add smart features → scale numbers →
+    train 3 different AI students → compare their scores → save the winners.
+    This is where all the magic happens - turns raw customer data into 3 trained AI brains!
+    """
     print("\n" + "=" * 60)
     print("🤖 MODEL TRAINING PIPELINE")
     print("=" * 60)

@@ -1,12 +1,15 @@
 """
-Data Preparation Script for Customer Churn Prediction
-This script handles:
-1. Loading raw data
-2. Data cleaning and missing value handling
-3. Feature engineering
-4. Encoding categorical variables
-5. Train/validation/test splitting
-6. Saving processed data
+Data Preparation Script - Getting Our Data Ready!
+
+This is like organizing a messy closet before a big event. We:
+1. Open the boxes (load raw data)
+2. Clean dirty clothes (fix errors and missing info)
+3. Add accessories (create new useful features)
+4. Label everything (convert text to numbers AI can understand)
+5. Sort into piles (split into practice, homework, and test sets)
+6. Store neatly (save everything for later use)
+
+Think of it like meal prep on Sunday - do all the hard work once, eat easy all week!
 """
 
 import pandas as pd
@@ -21,10 +24,12 @@ PROCESSED_DATA_DIR = 'data/processed/'
 
 def load_and_explore_data():
     """
-    Load the raw dataset and perform initial exploration.
+    Opens the customer data file and takes a first look at what's inside.
     
-    Returns:
-        pd.DataFrame: The raw dataset
+    Like opening a recipe book and checking: How many recipes are there? What ingredients
+    do we need? Are any pages ripped or missing? What's the most popular dish?
+    
+    What you get back: A table of all the customer information
     """
     print("=" * 60)
     print("LOADING AND EXPLORING RAW DATA")
@@ -60,17 +65,14 @@ def load_and_explore_data():
 
 def clean_data(df):
     """
-    Clean the dataset and handle missing/incorrect values.
+    Fixes errors and fills in missing information in our customer data.
     
-    Key tasks:
-    - Fix TotalCharges data type issue
-    - Handle missing values
+    Like proofreading an essay - fixing typos, filling in blank answers, and making
+    sure all the numbers make sense. If someone's bill says " " (blank), we figure
+    out what it should be or fill it with a smart guess.
     
-    Args:
-        df (pd.DataFrame): Raw dataset
-        
-    Returns:
-        pd.DataFrame: Cleaned dataset
+    What you give it: Messy customer data table
+    What you get back: Clean customer data table ready to use
     """
     print("\n" + "=" * 60)
     print("CLEANING DATA")
@@ -122,19 +124,15 @@ def clean_data(df):
 
 def engineer_features(df):
     """
-    Create new business-driven features.
+    Creates brand new information from the data we already have.
     
-    Features created:
-    - tenure_bucket: Categorize tenure into meaningful groups
-    - services_count: Total number of services subscribed
-    - monthly_to_total_ratio: Ratio to detect pricing changes
-    - internet_no_support: Flag for customers with internet but no tech support
+    Like a chef creating a special sauce from basic ingredients. We combine existing
+    info in clever ways to help our AI make better guesses. For example: Instead of
+    just knowing someone has been a customer for 8 months, we group them as "6-12 months"
+    customer - this helps spot patterns easier.
     
-    Args:
-        df (pd.DataFrame): Cleaned dataset
-        
-    Returns:
-        pd.DataFrame: Dataset with engineered features
+    What you give it: Clean customer data
+    What you get back: Same data PLUS 4 new clever columns that help predict churn
     """
     print("\n" + "=" * 60)
     print("ENGINEERING FEATURES")
@@ -197,24 +195,14 @@ def engineer_features(df):
 
 def create_interaction_features(df):
     """
-    Create interaction features to help linear models capture complex relationships.
+    Combines two pieces of information to create super-smart new clues.
     
-    Interaction features are combinations of two or more features that capture
-    non-linear relationships. Tree-based models learn these automatically, but
-    linear models (like Logistic Regression) need them explicitly created.
+    Like a detective saying: "People who are seniors AND have fancy internet are more
+    likely to have problems." Instead of looking at age and internet separately, we
+    look at them TOGETHER. This helps our AI spot hidden patterns that are easy to miss.
     
-    Key interactions based on domain knowledge:
-    - SeniorCitizen × InternetService (Fiber Optic): Seniors with fiber may have support issues
-    - Contract × tenure: Long contracts with short tenure indicate recent commitment changes
-    - MonthlyCharges × services_count: High cost with few services indicates poor value
-    - InternetService × OnlineSecurity/TechSupport: Service combinations affecting satisfaction
-    - PaymentMethod × Contract: Payment type may relate to contract commitment
-    
-    Args:
-        df (pd.DataFrame): Dataset with basic engineered features
-        
-    Returns:
-        pd.DataFrame: Dataset with interaction features added
+    What you give it: Customer data with basic info
+    What you get back: Same data PLUS 10 new super-smart combination columns
     """
     print("\n" + "=" * 60)
     print("CREATING INTERACTION FEATURES (OPTIONAL ENHANCEMENT)")
@@ -317,16 +305,14 @@ def create_interaction_features(df):
 
 def encode_categorical_variables(df):
     """
-    Encode categorical variables into numeric format.
+    Converts words into numbers so our AI can understand them.
     
-    IMPORTANT: LabelEncoder sorts alphabetically!
-    We must document the encoding scheme for use in the Streamlit app.
+    Like translating a book from English to Math. "Yes" becomes 1, "No" becomes 0,
+    "Male" becomes 1, "Female" becomes 0. AI can only do math, not read words, so
+    we need to give everything a number! We also save a dictionary so we can translate back later.
     
-    Args:
-        df (pd.DataFrame): Dataset with engineered features
-        
-    Returns:
-        tuple: (encoded dataframe, encoding_mapping dictionary)
+    What you give it: Data with words like "Yes", "No", "Male", "Female"
+    What you get back: Same data but all words replaced with numbers, PLUS a translation dictionary
     """
     print("\n" + "=" * 60)
     print("ENCODING CATEGORICAL VARIABLES")
@@ -389,22 +375,14 @@ def encode_categorical_variables(df):
 
 def calculate_clv(df):
     """
-    Calculate Customer Lifetime Value (CLV) for each customer.
+    Figures out how much money each customer is worth to the company over time.
     
-    CLV Formula: MonthlyCharges × ExpectedTenure
+    Like calculating: "If Sarah pays $50/month and stays for 24 months, she's worth $1,200!"
+    For customers who left, we use how long they actually stayed. For happy customers still
+    here, we guess they'll stay 3 more years (36 months) because that's normal.
     
-    Expected Tenure Assumption:
-    - For churned customers (Churn=1): Use actual tenure (they've left)
-    - For active customers (Churn=0): Current tenure + 36 months (industry avg)
-    
-    This is a simplified approach. In reality, you'd use survival analysis
-    or more sophisticated methods.
-    
-    Args:
-        df (pd.DataFrame): Encoded dataset
-        
-    Returns:
-        pd.DataFrame: Dataset with CLV column added
+    What you give it: Customer data with monthly bills and how long they've been customers
+    What you get back: Same data PLUS a new "CLV" column showing each customer's total worth
     """
     print("\n" + "=" * 60)
     print("CALCULATING CUSTOMER LIFETIME VALUE (CLV)")
@@ -455,19 +433,17 @@ def calculate_clv(df):
 
 def split_and_save_data(df):
     """
-    Split data into train/validation/test sets and save to disk.
+    Divides our customer data into 3 piles and saves them as files.
     
-    Split Strategy:
-    - 60% train
-    - 20% validation
-    - 20% test
-    - Stratified by Churn to maintain class balance
+    Like dividing flashcards for studying:
+    - 60% Practice pile: For teaching our AI the patterns
+    - 20% Quiz pile: For checking if AI learned correctly while studying
+    - 20% Final exam pile: For testing AI on totally new data it's never seen
     
-    Args:
-        df (pd.DataFrame): Dataset with CLV
-        
-    Returns:
-        tuple: (train, val, test) DataFrames
+    We make sure each pile has a fair mix of "left" and "stayed" customers!
+    
+    What you give it: Complete customer data
+    What you get back: 3 separate piles (train, validation, test) saved as CSV files
     """
     print("\n" + "=" * 60)
     print("SPLITTING AND SAVING DATA")

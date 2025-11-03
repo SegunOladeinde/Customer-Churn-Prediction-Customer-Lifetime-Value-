@@ -1,6 +1,12 @@
 """
-Prediction Module for Customer Churn
-Handles loading models and making predictions on new customer data
+Prediction Module - Making Churn Guesses for New Customers
+
+This is like a fortune teller's crystal ball, but powered by math and data!
+When someone types in a new customer's information, this module wakes up our
+trained AI models and asks them: "Will this person leave?"
+
+Think of it like: You show a photo to 3 different teachers and ask "Will this
+student pass?" Each teacher gives their opinion, and we average their answers.
 """
 
 import pandas as pd
@@ -15,10 +21,12 @@ MODELS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models')
 
 def load_models():
     """
-    Load all trained models and preprocessing objects
+    Opens the saved AI brains we trained earlier so they're ready to make guesses.
     
-    Returns:
-        tuple: (lr_model, rf_model, xgb_model, scaler)
+    Like waking up a sleeping robot - we load all 3 AI models (Logistic Regression,
+    Random Forest, XGBoost) plus the "scaler" that helps them understand numbers correctly.
+    
+    What you get back: All 3 trained AI models + the number-helper tool (scaler)
     """
     lr_model = joblib.load(os.path.join(MODELS_DIR, 'logistic_regression.pkl'))
     rf_model = joblib.load(os.path.join(MODELS_DIR, 'random_forest.pkl'))
@@ -30,18 +38,14 @@ def load_models():
 
 def prepare_input_data(customer_data):
     """
-    Prepare customer data for prediction by creating all necessary features
+    Transforms a single customer's info into the exact format our AI expects.
     
-    Args:
-        customer_data (dict): Dictionary with customer information
-        Expected keys: gender, SeniorCitizen, Partner, Dependents, tenure,
-                      PhoneService, MultipleLines, InternetService, OnlineSecurity,
-                      OnlineBackup, DeviceProtection, TechSupport, StreamingTV,
-                      StreamingMovies, Contract, PaperlessBilling, PaymentMethod,
-                      MonthlyCharges, services_count, internet_no_support
-        
-    Returns:
-        pd.DataFrame: DataFrame with all 52 features in correct order
+    Like translating a recipe from cups to grams - the AI needs data in a VERY specific
+    way with EXACTLY 52 pieces of information in the right order. We take the customer's
+    basic details and engineer all the fancy features the AI was trained on.
+    
+    What you give it: A dictionary with customer details (like name, age, services, etc.)
+    What you get back: A perfectly formatted table with all 52 features ready for AI
     """
     # Calculate tenure_bucket
     tenure_bucket_val = pd.cut(
@@ -88,23 +92,12 @@ def prepare_input_data(customer_data):
 
 def predict_churn(customer_data):
     """
-    Predict churn probability for a customer
+    Asks our 3 AI models: "Will this customer leave?"
+    Like polling 3 expert teachers for their opinion, then averaging their answers.
+    The final score tells us if the customer is HIGH risk (70%+), MEDIUM risk (40-70%), or LOW risk (below 40%).
     
-    Args:
-        customer_data (dict): Dictionary with customer information
-            Required keys: gender, SeniorCitizen, Partner, Dependents, tenure,
-            PhoneService, MultipleLines, InternetService, OnlineSecurity,
-            OnlineBackup, DeviceProtection, TechSupport, StreamingTV,
-            StreamingMovies, Contract, PaperlessBilling, PaymentMethod,
-            MonthlyCharges, services_count, internet_no_support
-            
-    Returns:
-        dict: Prediction results with keys:
-            - lr_proba: Logistic Regression probability
-            - rf_proba: Random Forest probability
-            - xgb_proba: XGBoost probability
-            - ensemble_proba: Average probability
-            - risk_level: 'HIGH', 'MEDIUM', or 'LOW'
+    What you give it: Customer details in a dictionary (age, services, payment info, etc.)
+    What you get back: A report card with all 3 AI opinions + average risk score + risk level (HIGH/MEDIUM/LOW)
     """
     # Load models
     lr_model, rf_model, xgb_model, scaler = load_models()
@@ -143,14 +136,11 @@ def predict_churn(customer_data):
 
 def calculate_clv(monthly_charges, expected_tenure_months=24):
     """
-    Calculate Customer Lifetime Value estimate
+    Calculates how much money a customer is worth over their lifetime.
+    Like estimating total allowance: if you get $50/month and stay for 24 months, you're worth $1,200!
     
-    Args:
-        monthly_charges (float): Monthly charges for the customer
-        expected_tenure_months (int): Expected tenure in months (default: 24)
-        
-    Returns:
-        float: Estimated CLV
+    What you give it: Monthly bill amount (like $70.50) and how long they'll stay (default is 24 months)
+    What you get back: Total dollar value (example: $70.50 × 24 = $1,692)
     """
     return monthly_charges * expected_tenure_months
 
