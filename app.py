@@ -198,18 +198,27 @@ def load_models():
     Caches them so we don't have to reload every time (saves time).
     """
     try:
-        lr_model = joblib.load(MODELS_DIR / 'logistic_regression.pkl')
-        rf_model = joblib.load(MODELS_DIR / 'random_forest.pkl')
-        xgb_model = joblib.load(MODELS_DIR / 'xgboost.pkl')
-        scaler = joblib.load(MODELS_DIR / 'scaler.pkl')
+        lr_model = joblib.load(str(MODELS_DIR / 'logistic_regression.pkl'))
+        rf_model = joblib.load(str(MODELS_DIR / 'random_forest.pkl'))
+        xgb_model = joblib.load(str(MODELS_DIR / 'xgboost.pkl'))
+        scaler = joblib.load(str(MODELS_DIR / 'scaler.pkl'))
         
         # Create SHAP explainers once and cache them
-        rf_explainer = shap.TreeExplainer(rf_model)
-        xgb_explainer = shap.TreeExplainer(xgb_model)
+        rf_explainer = None
+        xgb_explainer = None
+        if shap is not None:
+            try:
+                rf_explainer = shap.TreeExplainer(rf_model)
+                xgb_explainer = shap.TreeExplainer(xgb_model)
+            except Exception:
+                pass
         
         return lr_model, rf_model, xgb_model, scaler, rf_explainer, xgb_explainer
     except FileNotFoundError as e:
         st.error(f"🚨 Model file not found: {e}. Please ensure models are trained and saved in the '{MODELS_DIR}' directory.")
+        return None, None, None, None, None, None
+    except Exception as e:
+        st.error(f"🚨 Error loading models: {e}")
         return None, None, None, None, None, None
 
 @st.cache_data
@@ -219,12 +228,12 @@ def load_supporting_data():
     Like a teacher gathering answer keys and old test results before class starts!
     """
     try:
-        with open(DATA_DIR / 'encoding_mapping.json', 'r') as f:
+        with open(str(DATA_DIR / 'encoding_mapping.json'), 'r') as f:
             encoding_mapping = json.load(f)
         
-        test_data = pd.read_csv(DATA_DIR / 'test.csv')
-        model_comparison = pd.read_csv(MODELS_DIR / 'model_comparison.csv')
-        feature_comp = pd.read_csv(MODELS_DIR / 'feature_importance_comparison.csv')
+        test_data = pd.read_csv(str(DATA_DIR / 'test.csv'))
+        model_comparison = pd.read_csv(str(MODELS_DIR / 'model_comparison.csv'))
+        feature_comp = pd.read_csv(str(MODELS_DIR / 'feature_importance_comparison.csv'))
         
         return encoding_mapping, test_data, model_comparison, feature_comp
     except FileNotFoundError as e:
