@@ -31,20 +31,103 @@ except ImportError:
 
 # --- 1. SETUP AND CONFIGURATION ---
 
-# Add src directory to path for robust imports
-BASE_DIR = Path(__file__).parent
-SRC_DIR = BASE_DIR / 'src'
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
-
-# Import the create_interaction_features function
-try:
-    from train_models import create_interaction_features
-except ImportError:
-    # Fallback: define a simple version locally
-    def create_interaction_features(df):
-        """Fallback function if import fails"""
-        return df
+# Define the interaction features function directly in the app
+def create_interaction_features(df):
+    """
+    Creates 31 super-smart detective clues by combining customer info in clever ways!
+    
+    CRITICAL: This MUST match EXACTLY what we did during training in train_models.py.
+    Like following the exact same recipe - if we change anything, the AI gets confused!
+    Takes 21 basic customer details and expands them to 52 features total.
+    
+    What you give it: Basic customer info (age, services, payment, etc.)
+    What you give back: Same info PLUS 31 brilliant combination features the AI needs
+    """
+    df = df.copy()
+    
+    # 1. Polynomial Features
+    df['tenure_squared'] = df['tenure'] ** 2
+    df['tenure_log'] = np.log1p(df['tenure'])
+    df['charges_squared'] = df['MonthlyCharges'] ** 2
+    df['charges_log'] = np.log1p(df['MonthlyCharges'])
+    
+    # 2. Ratio Features
+    df['tenure_charges_ratio'] = df['tenure'] / (df['MonthlyCharges'] + 1)
+    df['contract_tenure_ratio'] = df['Contract'] / (df['tenure'] + 1)
+    df['charge_per_service'] = df['MonthlyCharges'] / (df['services_count'] + 1)
+    
+    # 3. Binary Interaction Features
+    df['senior_fiber'] = df['SeniorCitizen'] * df['InternetService']
+    df['senior_high_charge'] = df['SeniorCitizen'] * (df['MonthlyCharges'] > df['MonthlyCharges'].median()).astype(int)
+    df['monthly_short_tenure'] = ((df['MonthlyCharges'] > df['MonthlyCharges'].median()) & 
+                                  (df['tenure'] < df['tenure'].median())).astype(int)
+    
+    # 4. Service Quality Score
+    df['service_quality_score'] = (
+        df['OnlineSecurity'] + 
+        df['OnlineBackup'] + 
+        df['DeviceProtection'] + 
+        df['TechSupport']
+    )
+    
+    # 5. Risk Indicators
+    df['electronic_check_flag'] = (df['PaymentMethod'] == 2).astype(int)  # Electronic check
+    df['fiber_no_support'] = ((df['InternetService'] == 1) & 
+                              (df['TechSupport'] == 0)).astype(int)
+    
+    # 6. Triple Interaction
+    df['triple_risk'] = (
+        (df['Contract'] == 0) *  # Month-to-month
+        (df['PaymentMethod'] == 2) *  # Electronic check
+        (df['PaperlessBilling'] == 1)  # Paperless billing
+    ).astype(int)
+    
+    # 7. Isolated Customer Flag
+    df['isolated_customer'] = (
+        (df['Partner'] == 0) & 
+        (df['Dependents'] == 0)
+    ).astype(int)
+    
+    # 8. Tenure-Charges Interaction
+    df['tenure_charges_interaction'] = df['tenure'] * df['MonthlyCharges']
+    
+    # 9-16. Pairwise Interactions (8 additional features)
+    df['contract_internet'] = df['Contract'] * df['InternetService']
+    df['contract_payment'] = df['Contract'] * df['PaymentMethod']
+    df['internet_security'] = df['InternetService'] * df['OnlineSecurity']
+    df['internet_backup'] = df['InternetService'] * df['OnlineBackup']
+    df['security_support'] = df['OnlineSecurity'] * df['TechSupport']
+    df['senior_partner'] = df['SeniorCitizen'] * df['Partner']
+    df['paperless_autopay'] = df['PaperlessBilling'] * (df['PaymentMethod'] < 2).astype(int)
+    df['streaming_both'] = (df['StreamingTV'] == 1) & (df['StreamingMovies'] == 1)
+    df['streaming_both'] = df['streaming_both'].astype(int)
+    
+    # 17-21. Service Bundle Features (5 additional features)
+    df['premium_services'] = (
+        (df['OnlineSecurity'] == 1) & 
+        (df['OnlineBackup'] == 1) & 
+        (df['DeviceProtection'] == 1) & 
+        (df['TechSupport'] == 1)
+    ).astype(int)
+    
+    df['no_services'] = (df['services_count'] == 0).astype(int)
+    df['basic_internet_only'] = (
+        (df['InternetService'] > 0) & 
+        (df['OnlineSecurity'] == 0) & 
+        (df['OnlineBackup'] == 0)
+    ).astype(int)
+    
+    df['entertainment_bundle'] = (
+        (df['StreamingTV'] == 1) | 
+        (df['StreamingMovies'] == 1)
+    ).astype(int)
+    
+    df['protection_bundle'] = (
+        (df['OnlineSecurity'] == 1) | 
+        (df['DeviceProtection'] == 1)
+    ).astype(int)
+    
+    return df
 
 # Set page config for a modern, responsive layout
 st.set_page_config(
