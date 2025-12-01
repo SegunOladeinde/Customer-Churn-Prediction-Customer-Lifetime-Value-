@@ -198,10 +198,21 @@ def load_models():
     Caches them so we don't have to reload every time (saves time).
     """
     try:
-        lr_model = joblib.load(str(MODELS_DIR / 'logistic_regression.pkl'))
-        rf_model = joblib.load(str(MODELS_DIR / 'random_forest.pkl'))
-        xgb_model = joblib.load(str(MODELS_DIR / 'xgboost.pkl'))
-        scaler = joblib.load(str(MODELS_DIR / 'scaler.pkl'))
+        # Use explicit file paths as strings
+        lr_path = os.path.join(str(BASE_DIR), 'models', 'logistic_regression.pkl')
+        rf_path = os.path.join(str(BASE_DIR), 'models', 'random_forest.pkl')
+        xgb_path = os.path.join(str(BASE_DIR), 'models', 'xgboost.pkl')
+        scaler_path = os.path.join(str(BASE_DIR), 'models', 'scaler.pkl')
+        
+        # Load models using explicit file opening
+        with open(lr_path, 'rb') as f:
+            lr_model = joblib.load(f)
+        with open(rf_path, 'rb') as f:
+            rf_model = joblib.load(f)
+        with open(xgb_path, 'rb') as f:
+            xgb_model = joblib.load(f)
+        with open(scaler_path, 'rb') as f:
+            scaler = joblib.load(f)
         
         # Create SHAP explainers once and cache them
         rf_explainer = None
@@ -215,7 +226,7 @@ def load_models():
         
         return lr_model, rf_model, xgb_model, scaler, rf_explainer, xgb_explainer
     except FileNotFoundError as e:
-        st.error(f"🚨 Model file not found: {e}. Please ensure models are trained and saved in the '{MODELS_DIR}' directory.")
+        st.error(f"🚨 Model file not found: {e}. Please ensure models are trained and saved in the 'models' directory.")
         return None, None, None, None, None, None
     except Exception as e:
         st.error(f"🚨 Error loading models: {e}")
