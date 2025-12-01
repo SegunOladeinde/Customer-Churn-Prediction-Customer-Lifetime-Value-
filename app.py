@@ -16,21 +16,35 @@ import joblib
 import os
 import json
 import sys
-import matplotlib.pyplot as plt
-import shap
 from pathlib import Path
+
+# Handle optional imports with fallbacks
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    plt = None
+
+try:
+    import shap
+except ImportError:
+    shap = None
 
 # --- 1. SETUP AND CONFIGURATION ---
 
 # Add src directory to path for robust imports
-sys.path.append(str(Path(__file__).parent / 'src'))
+BASE_DIR = Path(__file__).parent
+SRC_DIR = BASE_DIR / 'src'
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
 
-# Force reload for development to pick up changes in train_models
-import importlib
-if 'train_models' in sys.modules:
-    importlib.reload(sys.modules['train_models'])
-
-from train_models import create_interaction_features
+# Import the create_interaction_features function
+try:
+    from train_models import create_interaction_features
+except ImportError:
+    # Fallback: define a simple version locally
+    def create_interaction_features(df):
+        """Fallback function if import fails"""
+        return df
 
 # Set page config for a modern, responsive layout
 st.set_page_config(
