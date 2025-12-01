@@ -1,5 +1,6 @@
 """
 ChurnGuard AI - Customer Churn Prediction Dashboard
+Version: 2.0.1 - December 2025
 
 This is the pretty website where users can:
 - Type in customer information and get a prediction: "Will they leave?"
@@ -12,11 +13,16 @@ Think of it like a crystal ball for businesses - but powered by math and AI!
 import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib
 import os
 import json
 import sys
 from pathlib import Path
+
+# Handle imports with fallbacks for Streamlit Cloud
+try:
+    import joblib
+except ImportError:
+    import pickle as joblib
 
 # Handle optional imports with fallbacks
 try:
